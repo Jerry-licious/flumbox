@@ -7,7 +7,17 @@ export const GameManager = {
                 // Use infinite moment of inertia to prevent rotation.
                 inertia: Infinity,
                 // Frictionless.
-                friction: 0
+                friction: 0,
+                label: "player"
+            }),
+            Matter.Bodies.rectangle(275, 275, 50, 50, {
+                // Use infinite moment of inertia to prevent rotation.
+                inertia: Infinity,
+                // Frictionless.
+                friction: 0,
+                isStatic: true,
+                isSensor: true,
+                label: "player"
             })
         ]
     ],
@@ -32,6 +42,11 @@ export const GameManager = {
     resetButtonStatus: function () {
         if (!document.querySelector("#toggle-gravity").classList.contains("enabled")) {
             document.querySelector("#toggle-gravity").classList.add("enabled");
+        }
+    },
+    nextLevel: function () {
+        if (this.currentLevel < this.levels.length - 1) {
+            this.loadLevel(this.currentLevel + 1);
         }
     }
 }

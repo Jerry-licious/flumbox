@@ -1,6 +1,7 @@
 import {GameRenderer} from "./gamerenderer.js";
 import {RenderConfig} from "./renderconfig.js";
 import {Direction} from "./direction.js";
+import {GameManager} from "./gamemanager.js";
 
 // A level should always be 600 by 600.
 export const levelSize = 600.0;
@@ -70,10 +71,10 @@ export class GameWorld {
     createWalls() {
         const halfLevelSize = levelSize * 0.5;
 
-        let ground =     Matter.Bodies.rectangle(0, -halfLevelSize, levelSize, 2, {isStatic: true});
-        let ceiling =    Matter.Bodies.rectangle(0, halfLevelSize, levelSize, 2, {isStatic: true});
-        let leftBound =  Matter.Bodies.rectangle(-halfLevelSize, 0, 2, levelSize, {isStatic: true});
-        let rightBound = Matter.Bodies.rectangle(halfLevelSize, 0, 2, levelSize, {isStatic: true});
+        let ground =     Matter.Bodies.rectangle(0, -halfLevelSize, levelSize, 2, {isStatic: true, label: "ground"});
+        let ceiling =    Matter.Bodies.rectangle(0, halfLevelSize, levelSize, 2, {isStatic: true, label: "ceiling"});
+        let leftBound =  Matter.Bodies.rectangle(-halfLevelSize, 0, 2, levelSize, {isStatic: true, label: "left"});
+        let rightBound = Matter.Bodies.rectangle(halfLevelSize, 0, 2, levelSize, {isStatic: true, label: "right"});
 
         Matter.Composite.add(this.engine.world, [ground, ceiling, leftBound, rightBound]);
     }
@@ -120,6 +121,24 @@ export class GameWorld {
             }
         };
         document.querySelector("#toggle-gravity").addEventListener("click", this.toggleGravityListener);
+
+        Matter.Events.on(this.engine, "collisionStart", (event) => {
+            for (const pair of event.pairs) {
+                const labelA = pair.bodyA.label;
+                const labelB = pair.bodyB.label;
+
+                // If the two objects have the same label.
+                if (labelA === labelB) {
+                    // Check if they are still in contact after 0.5 seconds, if so, win the game.
+                    setTimeout(() => {
+                        if (Matter.Collision.collides(pair.bodyA, pair.bodyB)) {
+                            // Win the game.
+                            this.win();
+                        }
+                    }, 100);
+                }
+            }
+        });
     }
 
     /**
@@ -194,5 +213,9 @@ export class GameWorld {
         document.querySelector("#toggle-gravity").removeEventListener("click", this.toggleGravityListener);
 
         this.renderer.dispose();
+    }
+
+    win() {
+        GameManager.nextLevel();
     }
 }
