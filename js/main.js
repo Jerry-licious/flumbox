@@ -18,4 +18,6 @@ import {GameManager} from "./gamemanager.js";
     document.querySelector("#reset").addEventListener("click", () => GameManager.reload());
 })();
 
+window.GameManager = GameManager;
+
 GameManager.loadLevel(0);

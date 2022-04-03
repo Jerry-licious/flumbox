@@ -62,6 +62,10 @@ const onDocumentClick = () => {
     setTimeout(()=>{
         container.remove()
         introCanvas.remove();
+
+        // Show the game.
+        document.querySelector(".intro").style.visibility = "hidden";
+        document.querySelector(".game").style.visibility = "visible";
     }, 2000);
 
     document.removeEventListener('click', onDocumentClick);
