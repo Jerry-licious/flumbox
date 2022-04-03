@@ -1,0 +1,91 @@
+/* 0 margin and padding to ensure that the canvas can fill the whole window without overflow. */
+html, body {
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.overlay {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    --left-right-size: calc(50vw - 50vh * 0.9);
+}
+
+.controls {
+    flex-shrink: 0;
+    height: 18vh;
+    min-height: 18vh;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.control-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    border: solid 3px black;
+    color: black;
+
+    width: 120px;
+    height: 60px;
+
+    user-select: none;
+    text-decoration: none !important;
+
+    transition-duration: 0.3s;
+}
+
+.control-button:hover {
+    box-shadow: 4px 4px 0 2px rgba(0,0,0,0.5);
+}
+
+.control-button.click.disabled {
+    color: grey;
+    border-color: grey;
+
+    cursor: not-allowed;
+}
+
+.control-button.click.disabled:hover {
+    box-shadow: none;
+}
+
+.control-button.click:focus {
+    background-color: black;
+    color: white;
+}
+
+.control-button .material-icons {
+    font-size: 48px;
+}
+
+.control-button.enabled {
+    background-color: black;
+    color: white;
+}
+
+.filler {
+    flex-grow: 1;
+}

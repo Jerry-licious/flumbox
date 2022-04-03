@@ -16,8 +16,13 @@ export const levelSize = 600.0;
  * @property {GameRenderer} renderer Renderer of the game.
  *
  * @property direction Direction of gravity.
+ * @property {boolean} gravity Whether gravity is enabled.
  *
  * @property {boolean} rotating Whether the world is being rotated at the moment.
+ *
+ * @property rotateCounterClockwiseListener
+ * @property rotateClockwiseListener
+ * @property toggleGravityListener
  * */
 export class GameWorld {
     constructor() {
@@ -36,6 +41,7 @@ export class GameWorld {
         );
 
         this.direction = Direction.Down;
+        this.gravity = true;
 
         this.initialise();
         this.start();
@@ -44,6 +50,7 @@ export class GameWorld {
     // Populates the level and adds event listeners.
     initialise() {
         this.createWalls();
+        this.hookListeners();
     }
 
     // Starts the physics and render engine.
@@ -70,11 +77,54 @@ export class GameWorld {
 
         Matter.World.add(this.engine.world, [ground, ceiling, leftBound, rightBound, object]);
     }
+    /**
+     * Rotates the world in a given direction by 90 degrees and blocks the buttons from being used in the process.
+     *
+     * @param {boolean} clockwise True for clockwise, false for counterclockwise.
+     */
+    onRotateButtonClick(clockwise) {
+        const rotateCounterClockwiseButton = document.querySelector("#rotate-counterclockwise");
+        const rotateClockwiseButton = document.querySelector("#rotate-clockwise");
+
+        rotateCounterClockwiseButton.classList.add("disabled");
+        rotateClockwiseButton.classList.add("disabled");
+
+        this.rotate(clockwise).then(() => {
+            rotateCounterClockwiseButton.classList.remove("disabled");
+            rotateClockwiseButton.classList.remove("disabled");
+        });
+    }
+
+    // Hooks event listeners to the game's controls.
+    hookListeners() {
+        this.rotateCounterClockwiseListener = (event) => {
+            this.onRotateButtonClick(false);
+        };
+        document.querySelector("#rotate-counterclockwise").addEventListener("click", this.rotateCounterClockwiseListener);
+
+        this.rotateClockwiseListener = (event) => {
+            this.onRotateButtonClick(true);
+        };
+        document.querySelector("#rotate-clockwise").addEventListener("click", this.rotateClockwiseListener);
+
+        this.toggleGravityListener = (event) => {
+            if (event.target.classList.contains("enabled")) {
+                event.target.classList.remove("enabled");
+                this.setGravity(false);
+            } else {
+                event.target.classList.add("enabled");
+                this.setGravity(true);
+            }
+        };
+        document.querySelector("#toggle-gravity").addEventListener("click", this.toggleGravityListener);
+    }
 
     /**
      * Rotates the world in a given direction by 90 degrees.
      *
      * @param {boolean} clockwise True for clockwise, false for counterclockwise.
+     *
+     * @returns {Promise} Returns an empty promise after the rotation animation is complete.
      */
     rotate(clockwise) {
         if (this.rotating) {
@@ -87,22 +137,57 @@ export class GameWorld {
         // Pause the physics engine when rotation starts.
         this.runner.enabled = false;
         // Rotate the renderer.
-        this.renderer.rotateBy(Math.PI * 0.5 * (clockwise ? 1 : -1))
-            // After the rotation completes, resume the engine and change the orientation and gravity.
-            .then(() => {
-                // Get the new direction, when the direction rotates clockwise, the gravity rotates counterclockwise.
-                this.direction = clockwise ? Direction.nextCounterClockwise(this.direction) : Direction.nextClockwise(this.direction);
+        return new Promise((resolve, reject) => {
+            this.renderer.rotateBy(Math.PI * 0.5 * (clockwise ? 1 : -1))
+                // After the rotation completes, resume the engine and change the orientation and gravity.
+                .then(() => {
+                    // Get the new direction, when the direction rotates clockwise, the gravity rotates counterclockwise.
+                    this.direction = clockwise ? Direction.nextCounterClockwise(this.direction) : Direction.nextClockwise(this.direction);
 
-                // Update gravity
-                const newGravityVector = Direction.toVector(this.direction);
-                this.engine.world.gravity.x = newGravityVector.x;
-                this.engine.world.gravity.y = newGravityVector.y;
+                    // Update gravity
+                    this.engine.world.gravity.x = this.gravityVector.x;
+                    this.engine.world.gravity.y = this.gravityVector.y;
 
-                // Resume the physics engine.
-                this.runner.enabled = true;
+                    // Resume the physics engine.
+                    this.runner.enabled = true;
 
-                // Set rotating to release the restriction.
-                this.rotating = false;
-            });
+                    // Set rotating to release the restriction.
+                    this.rotating = false;
+
+                    resolve();
+                });
+        })
+    }
+
+    /**
+     * Enables or disables gravity.
+     *
+     * @param {boolean} gravity Whether gravity will be enabled or not.
+     */
+    setGravity(gravity) {
+        this.gravity = gravity;
+
+        this.engine.world.gravity.x = this.gravityVector.x;
+        this.engine.world.gravity.y = this.gravityVector.y;
+    }
+
+    /**
+     * Returns the gravity vector of the world.
+     */
+    get gravityVector() {
+        return this.gravity ? Direction.toVector(this.direction) : { x: 0, y: 0 };
+    }
+
+    /**
+     * Unhooks all listeners and stops the physics engine.
+     */
+    dispose() {
+        // Stops the physics engine.
+        Matter.Runner.stop(this.runner);
+
+        // Clear the listeners.
+        document.querySelector("#rotate-counterclockwise").removeEventListener("click", this.rotateCounterClockwiseListener);
+        document.querySelector("#rotate-clockwise").removeEventListener("click", this.rotateClockwiseListener);
+        document.querySelector("#toggle-gravity").removeEventListener("click", this.toggleGravityListener);
     }
 }
