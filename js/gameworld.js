@@ -7,7 +7,7 @@ export const levelSize = 600.0;
 
 /**
  * A game world represents one level in the game. A level should always be 600 by 600 in size, with the origin
- * (0, 0) at its center.
+ * (0, 0) at its centre.
  *
  * @property {HTMLCanvasElement} canvas
  *
