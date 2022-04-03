@@ -20,7 +20,7 @@
 }
 
 .win-box {
-    width: 300px;
+    width: 400px;
     height: 150px;
 
     background-color: white;
@@ -35,7 +35,7 @@
 }
 
 .win-box .title {
-    font-size: 30px;
+    font-size: 24px;
     flex-grow: 1;
 
     display: flex;

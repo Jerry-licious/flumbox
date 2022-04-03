@@ -1,5 +1,5 @@
 /*initialization*/
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@200;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 :root{
     --menuDisplay: block;
     --gameDisplay: none;
@@ -11,7 +11,7 @@
     border: 0;
     cursor: context-menu;
     user-select: none;
-    font-family: 'Encode Sans SC', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
 }
 
 .intro {
@@ -34,7 +34,7 @@
 }
 
 #startBtn {
-    font-size: 54px;
+    font-size: 50px;
     text-align: center;
     margin: 15px auto 0px auto;
     width: 550px;
@@ -42,7 +42,6 @@
     background-color: transparent;
 }
 #startBtn:hover {
-    font-size: 58px;
     cursor: pointer;
 }
 

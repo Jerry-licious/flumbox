@@ -53,6 +53,7 @@ canvas {
 
     user-select: none;
     text-decoration: none !important;
+    font-size: 48px;
 
     transition-duration: 0.3s;
 }

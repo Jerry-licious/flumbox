@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="css/proceedOverlay.css">
 </head>
 <body>
-<div class="intro" style="visibility: hidden;">
+<div class="intro">
     <canvas id="intro-canvas" width="1000" height="1000"></canvas>
     <div id="intro-canvas-holder"></div>
     <script src="https://unpkg.com/matter-js@0.18.0/build/matter.js"></script>
 
     <!--Intro Page Elements-->
     <div id="container">
-        <div id="title">You are the box</div>
+        <div id="title">Flumbox</div>
         <div id="startBtn">Click Here to Start</div>
     </div>
 </div>
@@ -31,8 +31,8 @@
             <a class="control-button click" href="#" id="rotate-counterclockwise" onclick="this.blur()">
                 <span class="material-icons">rotate_left</span>
             </a>
-            <a class="control-button toggle enabled" href="#" id="toggle-gravity" onclick="this.blur()">
-                <span class="material-icons">swipe_down_alt</span>
+            <a class="control-button toggle enabled material-icons" href="#" id="toggle-gravity">
+                swipe_down_alt
             </a>
             <a class="control-button click" href="#" id="rotate-clockwise" onclick="this.blur()">
                 <span class="material-icons">rotate_right</span>
