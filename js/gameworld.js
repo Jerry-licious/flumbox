@@ -135,7 +135,7 @@ export class GameWorld {
                             // Win the game.
                             this.win();
                         }
-                    }, 100);
+                    }, 1000);
                 }
             }
         });
@@ -216,6 +216,6 @@ export class GameWorld {
     }
 
     win() {
-        GameManager.nextLevel();
+        GameManager.showProceedOverlay();
     }
 }

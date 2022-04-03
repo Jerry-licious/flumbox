@@ -20,4 +20,4 @@ import {GameManager} from "./gamemanager.js";
 
 window.GameManager = GameManager;
 
-GameManager.loadLevel(0);
+GameManager.initialise();

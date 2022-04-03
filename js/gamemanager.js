@@ -36,6 +36,28 @@ export const GameManager = {
         this.gameWorld = new GameWorld(this.levels[this.currentLevel]);
         this.gameWorld.start();
     },
+    initialise: function () {
+        this.loadLevel(0);
+
+        document.querySelector("#retry").addEventListener("click", () => {
+            this.hideProceedOverlay();
+            this.reload()
+        });
+        document.querySelector("#next-level").addEventListener("click", () => {
+            this.hideProceedOverlay();
+            this.nextLevel();
+        });
+    },
+    showProceedOverlay: function () {
+        document.querySelector(".proceed-overlay").classList.remove("hidden");
+        // If this is the last level.
+        if (this.currentLevel === this.levels.length - 1) {
+            document.querySelector("#next-level").style.display = "none";
+        }
+    },
+    hideProceedOverlay: function () {
+        document.querySelector(".proceed-overlay").classList.add("hidden");
+    },
     reload: function () {
         this.loadLevel(this.currentLevel);
     },

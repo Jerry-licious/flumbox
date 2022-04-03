@@ -12,7 +12,7 @@ canvas {
     position: absolute;
 }
 
-.overlay {
+.control-overlay {
     position: absolute;
 
     width: 100%;

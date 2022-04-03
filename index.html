@@ -6,9 +6,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/introStyle.css">
     <link rel="stylesheet" href="css/overlay.css">
+    <link rel="stylesheet" href="css/proceedOverlay.css">
 </head>
 <body>
-<div class="intro">
+<div class="intro" style="visibility: hidden;">
     <canvas id="intro-canvas" width="1000" height="1000"></canvas>
     <div id="intro-canvas-holder"></div>
     <script src="https://unpkg.com/matter-js@0.18.0/build/matter.js"></script>
@@ -21,7 +22,7 @@
 </div>
 <div class="game" style="visibility: hidden;">
     <canvas id="game-canvas" width="1000" height="1000"></canvas>
-    <div class="overlay">
+    <div class="control-overlay">
         <div class="filler"></div>
         <div class="controls">
             <a class="control-button click" href="#" id="reset" onclick="this.blur()">
@@ -35,6 +36,21 @@
             </a>
             <a class="control-button click" href="#" id="rotate-clockwise" onclick="this.blur()">
                 <span class="material-icons">rotate_right</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="proceed-overlay hidden">
+    <div class="win-box">
+        <div class="title">
+            Congratulations
+        </div>
+        <div class="box-controls">
+            <a class="button click" id="retry" href="#" onclick="this.blur()">
+                <span class="material-icons">refresh</span>
+            </a>
+            <a class="button click" id="next-level" href="#" onclick="this.blur()">
+                <span class="material-icons">navigate_next</span>
             </a>
         </div>
     </div>
