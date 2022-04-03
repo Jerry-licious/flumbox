@@ -1,4 +1,5 @@
 import {GameWorld} from "./gameworld.js";
+import {GameManager} from "./gamemanager.js";
 
 // Initialise the size of the canvas.
 (function initialiseCanvas() {
@@ -13,4 +14,8 @@ import {GameWorld} from "./gameworld.js";
     // document.querySelector(".overlay").style.setProperty("--left-right-size", horizontalSpace);
 })();
 
-window.world = new GameWorld();
+(function bindReloadButton() {
+    document.querySelector("#reset").addEventListener("click", () => GameManager.reload());
+})();
+
+GameManager.gameWorld.start();

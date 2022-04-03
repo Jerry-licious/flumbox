@@ -25,7 +25,10 @@ export const levelSize = 600.0;
  * @property toggleGravityListener
  * */
 export class GameWorld {
-    constructor() {
+    /**
+     * @param bodies A list of objects placed in the level.
+     */
+    constructor(bodies) {
         this.canvas = document.querySelector("#game-canvas");
 
         this.engine = Matter.Engine.create();
@@ -43,12 +46,16 @@ export class GameWorld {
         this.direction = Direction.Down;
         this.gravity = true;
 
-        this.initialise();
-        this.start();
+        this.initialise([]);
     }
 
     // Populates the level and adds event listeners.
-    initialise() {
+    initialise(bodies) {
+        // Clones all the objects.
+        for (const body of bodies) {
+            Matter.World.add(this.engine.world, Matter.Common.clone(body, true));
+        }
+
         this.createWalls();
         this.hookListeners();
     }
@@ -83,6 +90,9 @@ export class GameWorld {
      * @param {boolean} clockwise True for clockwise, false for counterclockwise.
      */
     onRotateButtonClick(clockwise) {
+        // No rotations while rotating.
+        if (this.rotating) return;
+
         const rotateCounterClockwiseButton = document.querySelector("#rotate-counterclockwise");
         const rotateClockwiseButton = document.querySelector("#rotate-clockwise");
 
@@ -183,7 +193,7 @@ export class GameWorld {
      */
     dispose() {
         // Stops the physics engine.
-        Matter.Runner.stop(this.runner);
+        this.runner.enabled = false;
 
         // Clear the listeners.
         document.querySelector("#rotate-counterclockwise").removeEventListener("click", this.rotateCounterClockwiseListener);
