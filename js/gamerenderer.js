@@ -82,36 +82,45 @@ export class GameRenderer {
      * Creates a smooth rotation to the target angle.
      *
      * @param {number} theta Rotation in radians, clockwise.
+     *
+     * @returns {Promise} Returns an empty promise when the rotation animation is finished.
      * */
     rotateTo(theta) {
-        // Start and end angles
-        const start = this.canvasRotation, end = theta;
+        return new Promise((resolve, reject) => {
+            // Start and end angles
+            const start = this.canvasRotation, end = theta;
 
-        // Mark the start and end time.
-        const startTime = Date.now();
-        // Total number of miliseconds that the animation takes.
-        const totalTime = 1000;
+            // Mark the start and end time.
+            const startTime = Date.now();
+            // Total number of miliseconds that the animation takes.
+            const totalTime = 1000;
 
-        // Set an interval to update the canvas rotation.
-        const intervalHandle = setInterval(() => {
-            // Stop interpolating after the time is up.
-            if (Date.now() - startTime > totalTime) {
-                this.canvasRotation = end;
-                clearInterval(intervalHandle);
-                return;
-            }
-            this.canvasRotation = Interpolation.log2
-                // Calculate the progress by dividing
-                .apply(start, end, (Date.now() - startTime) / totalTime);
-        }, 30);
+            // Set an interval to update the canvas rotation.
+            const intervalHandle = setInterval(() => {
+                // Stop interpolating after the time is up.
+                if (Date.now() - startTime > totalTime) {
+                    this.canvasRotation = end;
+                    clearInterval(intervalHandle);
+
+                    // Resolve the promise.
+                    resolve();
+                    return;
+                }
+                this.canvasRotation = Interpolation.log2
+                    // Calculate the progress by dividing
+                    .apply(start, end, (Date.now() - startTime) / totalTime);
+            }, 30);
+        })
     }
 
     /**
      * Smoothly rotates the scene by the target angle.
      *
      * @param {number} theta Rotation in radians, clockwise.
+     * 
+     * @returns {Promise} Returns an empty promise when the rotation animation is finished.
      * */
     rotateBy(theta) {
-        this.rotateTo(this.canvasRotation + theta);
+        return this.rotateTo(this.canvasRotation + theta);
     }
 }
