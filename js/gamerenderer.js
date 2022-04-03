@@ -9,6 +9,8 @@ import {levelSize} from "./gameworld.js";
  * @property {CanvasRenderingContext2D} context
  *
  * @property {number} canvasRotation The rotation of the game around the centre of the screen, in radians.
+ *
+ * @property {boolean} enabled Whether the renderer is enabled or not.
  * */
 export class GameRenderer {
     /**
@@ -24,6 +26,8 @@ export class GameRenderer {
         this.context = canvas.getContext("2d");
 
         this.canvasRotation = 0;
+
+        this.enabled = true;
     }
 
     // Draws the current bodies onto the canvas.
@@ -82,7 +86,9 @@ export class GameRenderer {
     // Continuously renders the game.
     run() {
         this.render();
-        window.requestAnimationFrame(() => this.run());
+        if (this.enabled) {
+            window.requestAnimationFrame(() => this.run());
+        }
     }
 
     /**
@@ -127,5 +133,12 @@ export class GameRenderer {
      * */
     rotateBy(theta) {
         return this.rotateTo(this.canvasRotation + theta);
+    }
+
+    /**
+     * Halts the rendering and unhooks all event listeners.
+     */
+    dispose() {
+        this.enabled = false;
     }
 }
