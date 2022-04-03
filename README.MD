@@ -1,4 +1,4 @@
-![Screenshot|width=250px](./github/screenshot.png)
+![Screenshot](./github/screenshot.png|width=250px)
 
 # Flumbox
 
