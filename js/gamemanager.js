@@ -2,7 +2,7 @@ import {GameWorld} from "./gameworld.js";
 
 export const GameManager = {
     levels: [
-        //lv 1
+        // Rotation Tutorial
         [
             //Goal
             Matter.Bodies.rectangle(-155, 165, 50, 50, {
@@ -34,54 +34,7 @@ export const GameManager = {
                 isStatic: true
             })
         ],
-        //lv 2
-        [
-        Matter.Bodies.rectangle(275, 275, 50, 50, {
-            isStatic: true,
-            isSensor: true,
-            label: 'detector3',
-            render: {
-                strokeStyle: "grey",
-                fillStyle: "white",
-                lineWidth: 6
-            }
-        }),
-            Matter.Bodies.rectangle(-150, 225, 50, 50, {
-                // Use infinite moment of inertia to prevent rotation.
-                inertia: Infinity,
-                // Frictionless.
-                friction: 0,
-                label: 'detector3',
-                render: {
-                    fillStyle: "grey",
-                    lineWidth: 2
-                }
-            }),
-            Matter.Bodies.rectangle(-150, 150, 100, 50, {isStatic: true, label: '1'}),
-            Matter.Bodies.rectangle(250, 125, 100, 50, {isStatic: true, label: '2'}),
-            Matter.Bodies.rectangle(150, 286, 50, 25, {isStatic: true, label: '3'}),
-            Matter.Bodies.rectangle(100, 175, 50, 199, {
-                // Use infinite moment of inertia to prevent rotation.
-                inertia: Infinity,
-                // Frictionless.
-                label: '4',
-                friction: 0,
-                render: {
-                    fillStyle: "#d0d0d0"
-                }
-            }),
-            Matter.Bodies.rectangle(190, 50, 225, 50, {
-                // Use infinite moment of inertia to prevent rotation.
-                inertia: Infinity,
-                // Frictionless.
-                friction: 0,
-                label: '5',
-                render: {
-                    fillStyle: "#d0d0d0"
-                }
-            })
-        ],
-        //lv 3
+        //lv 1
         [
             Matter.Bodies.rectangle(-125, 150, 50, 50, {
                 isStatic: true,
@@ -108,7 +61,39 @@ export const GameManager = {
             Matter.Bodies.rectangle(-150, -100, 100, 50, {isStatic: true, label: '4'}),
             Matter.Bodies.rectangle(-175, 50, 50, 50, {isStatic: true, label: '5'})
         ],
-        //lv 4
+        // Gravity tutorial
+        [
+            //Goal
+            Matter.Bodies.rectangle(0, -175, 50, 50, {
+                isStatic: true,
+                isSensor: true,
+                label: 'detector',
+                render: {
+                    fillStyle: "white",
+                    strokeStyle: "grey",
+                    lineWidth: 6
+                }
+            }),
+            //player
+            Matter.Bodies.rectangle(0, 175, 50, 50, {
+                // Use infinite moment of inertia to prevent rotation.
+                inertia: Infinity,
+                // Frictionless.
+                friction: 0,
+                label: 'detector',
+                render: {
+                    fillStyle: "grey",
+                    lineWidth: 2
+                }
+            }),
+            Matter.Bodies.rectangle(0, 200, 400, 20, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(0, -210, 400, 20, {
+                isStatic: true
+            }),
+        ],
+        //lv 2
         [
             Matter.Bodies.rectangle(-25, 0, 50, 50, {
                 isStatic: true,
@@ -155,7 +140,54 @@ export const GameManager = {
                 }
             })
         ],
-        //lv 5
+        //lv 3
+        [
+            Matter.Bodies.rectangle(275, 275, 50, 50, {
+                isStatic: true,
+                isSensor: true,
+                label: 'detector3',
+                render: {
+                    strokeStyle: "grey",
+                    fillStyle: "white",
+                    lineWidth: 6
+                }
+            }),
+            Matter.Bodies.rectangle(-150, 225, 50, 50, {
+                // Use infinite moment of inertia to prevent rotation.
+                inertia: Infinity,
+                // Frictionless.
+                friction: 0,
+                label: 'detector3',
+                render: {
+                    fillStyle: "grey",
+                    lineWidth: 2
+                }
+            }),
+            Matter.Bodies.rectangle(-150, 150, 100, 50, {isStatic: true, label: '1'}),
+            Matter.Bodies.rectangle(250, 125, 100, 50, {isStatic: true, label: '2'}),
+            Matter.Bodies.rectangle(150, 286, 50, 25, {isStatic: true, label: '3'}),
+            Matter.Bodies.rectangle(100, 175, 50, 199, {
+                // Use infinite moment of inertia to prevent rotation.
+                inertia: Infinity,
+                // Frictionless.
+                label: '4',
+                friction: 0,
+                render: {
+                    fillStyle: "#d0d0d0"
+                }
+            }),
+            Matter.Bodies.rectangle(190, 50, 225, 50, {
+                // Use infinite moment of inertia to prevent rotation.
+                inertia: Infinity,
+                // Frictionless.
+                friction: 0,
+                label: '5',
+                render: {
+                    fillStyle: "#d0d0d0"
+                }
+            })
+        ],
+        //lv 4
         [
             //Goal
             Matter.Bodies.rectangle(-25, 275, 50, 50, {
