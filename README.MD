@@ -1,4 +1,4 @@
-![Screenshot](./github/screenshot.png|width=250px)
+<img src="https://github.com/Jerry-licious/flumbox/blob/master/github/screenshot.png?raw=true" width="250px">
 
 # Flumbox
 
