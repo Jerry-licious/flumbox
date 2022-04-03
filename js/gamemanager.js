@@ -11,13 +11,15 @@ export const GameManager = {
             })
         ]
     ],
-    gameWorld: new GameWorld([]),
+    gameWorld: undefined,
     currentLevel: 0,
     // Index of the level.
     loadLevel: function (index) {
         this.currentLevel = index;
 
-        this.gameWorld.dispose();
+        if (this.gameWorld) {
+            this.gameWorld.dispose();
+        }
 
         this.resetButtonStatus();
 

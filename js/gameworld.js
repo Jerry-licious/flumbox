@@ -192,5 +192,7 @@ export class GameWorld {
         document.querySelector("#rotate-counterclockwise").removeEventListener("click", this.rotateCounterClockwiseListener);
         document.querySelector("#rotate-clockwise").removeEventListener("click", this.rotateClockwiseListener);
         document.querySelector("#toggle-gravity").removeEventListener("click", this.toggleGravityListener);
+
+        this.renderer.dispose();
     }
 }

@@ -18,4 +18,4 @@ import {GameManager} from "./gamemanager.js";
     document.querySelector("#reset").addEventListener("click", () => GameManager.reload());
 })();
 
-GameManager.gameWorld.start();
+GameManager.loadLevel(0);
