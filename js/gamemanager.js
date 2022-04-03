@@ -36,52 +36,6 @@ export const GameManager = {
         ],
         //lv 2
         [
-            //Goal
-            Matter.Bodies.rectangle(-25, 275, 50, 50, {
-                isStatic: true,
-                isSensor: true,
-                label: 'detector1',
-                render: {
-                    fillStyle: "white",
-                    strokeStyle: "grey",
-                    lineWidth: 6
-                }
-            }),
-            //player
-            Matter.Bodies.rectangle(-225, 225, 50, 50, {
-                inertia: Infinity,
-                friction: 0,
-                label: 'detector1', //for detection of goal
-                render: {
-                    fillStyle: "grey",
-                    lineWidth: 2
-                }
-            }),
-            //static obj
-            Matter.Bodies.rectangle(-200, 275, 200, 50, {
-                isStatic: true
-            }),
-            Matter.Bodies.rectangle(-100,100, 20, 400, {
-                isStatic: true
-            }),
-            Matter.Bodies.rectangle(-100, -100, 100, 20, {
-                isStatic: true
-            }),
-            Matter.Bodies.rectangle(-150, -275, 200, 20, {
-                isStatic: true
-            }),
-            Matter.Bodies.rectangle(-60, -225, 20, 80, {
-                isStatic: true
-            }),
-            Matter.Bodies.rectangle(200, -140, 20, 100, {
-                isStatic: true
-            }),
-            Matter.Bodies.rectangle(150, 200, 100, 200, {
-                isStatic: true
-            })
-        ],
-        //lv 3
-        [
         Matter.Bodies.rectangle(275, 275, 50, 50, {
             isStatic: true,
             isSensor: true,
@@ -127,7 +81,7 @@ export const GameManager = {
                 }
             })
         ],
-        //lv 4
+        //lv 3
         [
             Matter.Bodies.rectangle(-125, 150, 50, 50, {
                 isStatic: true,
@@ -154,7 +108,7 @@ export const GameManager = {
             Matter.Bodies.rectangle(-150, -100, 100, 50, {isStatic: true, label: '4'}),
             Matter.Bodies.rectangle(-175, 50, 50, 50, {isStatic: true, label: '5'})
         ],
-        //lv 5
+        //lv 4
         [
             Matter.Bodies.rectangle(-25, 0, 50, 50, {
                 isStatic: true,
@@ -200,7 +154,53 @@ export const GameManager = {
                     fillStyle: "#d0d0d0"
                 }
             })
-        ]
+        ],
+        //lv 5
+        [
+            //Goal
+            Matter.Bodies.rectangle(-25, 275, 50, 50, {
+                isStatic: true,
+                isSensor: true,
+                label: 'detector1',
+                render: {
+                    fillStyle: "white",
+                    strokeStyle: "grey",
+                    lineWidth: 6
+                }
+            }),
+            //player
+            Matter.Bodies.rectangle(-225, 225, 50, 50, {
+                inertia: Infinity,
+                friction: 0,
+                label: 'detector1', //for detection of goal
+                render: {
+                    fillStyle: "grey",
+                    lineWidth: 2
+                }
+            }),
+            //static obj
+            Matter.Bodies.rectangle(-200, 275, 200, 50, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(-100,100, 20, 400, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(-100, -100, 100, 20, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(-150, -275, 200, 20, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(-60, -225, 20, 80, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(200, -140, 20, 100, {
+                isStatic: true
+            }),
+            Matter.Bodies.rectangle(150, 200, 100, 200, {
+                isStatic: true
+            })
+        ],
     ],
     gameWorld: undefined,
     currentLevel: 0,
