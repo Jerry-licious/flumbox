@@ -46,14 +46,14 @@ export class GameWorld {
         this.direction = Direction.Down;
         this.gravity = true;
 
-        this.initialise([]);
+        this.initialise(bodies);
     }
 
     // Populates the level and adds event listeners.
     initialise(bodies) {
         // Clones all the objects.
         for (const body of bodies) {
-            Matter.World.add(this.engine.world, Matter.Common.clone(body, true));
+            Matter.Composite.add(this.engine.world, clone(body));
         }
 
         this.createWalls();
@@ -75,14 +75,7 @@ export class GameWorld {
         let leftBound =  Matter.Bodies.rectangle(-halfLevelSize, 0, 2, levelSize, {isStatic: true});
         let rightBound = Matter.Bodies.rectangle(halfLevelSize, 0, 2, levelSize, {isStatic: true});
 
-        let object =  Matter.Bodies.rectangle(0, 0, 50, 50, {
-            // Use infinite moment of inertia to prevent rotation.
-            inertia: Infinity,
-            // Frictionless.
-            friction: 0
-        });
-
-        Matter.World.add(this.engine.world, [ground, ceiling, leftBound, rightBound, object]);
+        Matter.Composite.add(this.engine.world, [ground, ceiling, leftBound, rightBound]);
     }
     /**
      * Rotates the world in a given direction by 90 degrees and blocks the buttons from being used in the process.

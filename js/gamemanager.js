@@ -1,7 +1,6 @@
 import {GameWorld} from "./gameworld.js";
 
 export const GameManager = {
-    gameWorld: new GameWorld(),
     levels: [
         [
             Matter.Bodies.rectangle(100, 100, 50, 50, {
@@ -12,6 +11,7 @@ export const GameManager = {
             })
         ]
     ],
+    gameWorld: new GameWorld([]),
     currentLevel: 0,
     // Index of the level.
     loadLevel: function (index) {
