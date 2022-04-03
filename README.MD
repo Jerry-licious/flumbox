@@ -1,3 +1,5 @@
+![|width=250px](./github/screenshot.png)
+
 # Flumbox
 
 [Marihacks 2021](marihacks.com) submission.
