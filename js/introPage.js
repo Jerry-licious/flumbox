@@ -51,9 +51,7 @@ Matter.Runner.run(runner, engine);
 let introCanvas = document.querySelector('#intro-canvas');
 introCanvas.id="introCanvas";
 
-
-//transition to next page
-document.addEventListener('click', ()=> {
+const onDocumentClick = () => {
     let container = document.getElementById('container');
     Matter.Composite.remove(engine.world, ground);
     document.body.style.setProperty('background-color', 'rgba(234, 234, 234, 1)')
@@ -64,5 +62,9 @@ document.addEventListener('click', ()=> {
     setTimeout(()=>{
         container.remove()
         introCanvas.remove();
-    }, 2000)
-})
+    }, 2000);
+
+    document.removeEventListener('click', onDocumentClick);
+};
+//transition to next page
+document.addEventListener('click', onDocumentClick);
