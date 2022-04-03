@@ -1,11 +1,16 @@
 import {GameRenderer} from "./gamerenderer.js";
 import {RenderConfig} from "./renderconfig.js";
+import {Direction} from "./direction.js";
 
 /**
  * @property {HTMLCanvasElement} canvas
  *
  * @property {Matter.Engine} engine Physics engine of the game.
  * @property {GameRenderer} renderer Renderer of the game.
+ *
+ * @property direction Direction of gravity.
+ *
+ * @property {boolean} rotating Whether the world is being rotated at the moment.
  * */
 export class GameWorld {
     constructor() {
@@ -21,6 +26,8 @@ export class GameWorld {
                 "black"
             )
         );
+
+        this.direction = Direction.Down;
 
         this.initialise();
         this.start();
@@ -54,6 +61,48 @@ export class GameWorld {
         let leftBound =  Matter.Bodies.rectangle(centerX - halfLevelSize, centerY, 2, levelSize, {isStatic: true});
         let rightBound = Matter.Bodies.rectangle(centerX + halfLevelSize, centerY, 2, levelSize, {isStatic: true});
 
-        Matter.World.add(this.engine.world, [ground, ceiling, leftBound, rightBound]);
+        let object =  Matter.Bodies.rectangle(centerX, centerY, 100, 100, {
+            // Use infinite moment of inertia to prevent rotation.
+            inertia: Infinity,
+            // Frictionless.
+            friction: 0
+        });
+
+        Matter.World.add(this.engine.world, [ground, ceiling, leftBound, rightBound, object]);
+    }
+
+    /**
+     * Rotates the world in a given direction by 90 degrees.
+     *
+     * @param {boolean} clockwise True for clockwise, false for counterclockwise.
+     */
+    rotate(clockwise) {
+        if (this.rotating) {
+            throw new Error("This world is currently being rotated.");
+        }
+
+        // Set rotating to true to block other rotation attempts.
+        this.rotating = true;
+
+        // Pause the physics engine when rotation starts.
+        this.engine.enabled = false;
+        // Rotate the renderer.
+        this.renderer.rotateBy(Math.PI * 0.5 * (clockwise ? 1 : -1))
+            // After the rotation completes, resume the engine and change the orientation and gravity.
+            .then(() => {
+                // Get the new direction, when the direction rotates clockwise, the gravity rotates counterclockwise.
+                this.direction = clockwise ? Direction.nextCounterClockwise(this.direction) : Direction.nextClockwise(this.direction);
+
+                // Update gravity
+                const newGravityVector = Direction.toVector(this.direction);
+                this.engine.world.gravity.x = newGravityVector.x;
+                this.engine.world.gravity.y = newGravityVector.y;
+
+                // Resume the physics engine.
+                this.engine.enabled = true;
+
+                // Set rotating to release the restriction.
+                this.rotating = false;
+            });
     }
 }
