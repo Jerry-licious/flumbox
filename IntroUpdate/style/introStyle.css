@@ -1,0 +1,77 @@
+/*initialization*/
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@200;300&display=swap');
+:root{
+    --menuDisplay: block;
+    --gameDisplay: none;
+}
+* {
+    background-color: rgba(234, 234, 234, 0);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    cursor: context-menu;
+    user-select: none;
+    font-family: 'Encode Sans SC', sans-serif;
+}
+
+/*CSS Starts Here*/
+#container {
+    position: relative;
+}
+
+#title {
+    font-size: 64px;
+    text-align: center;
+    margin: 200px auto 0px auto;
+    width: 1200px;
+    opacity: 0%;/*Goes to 100% upon start*/
+}
+
+#startBtn {
+    font-size: 54px;
+    text-align: center;
+    margin: 15px auto 0px auto;
+    width: 550px;
+    opacity: 0%;/*Goes to 100% upon start*/
+    background-color: transparent;
+}
+#startBtn:hover {
+    font-size: 58px;
+    cursor: pointer;
+}
+
+@keyframes titleAnimation {
+    0% {opacity: 0%; margin-top: 300px;}
+    75% {margin-top: 200px;}
+    100% {opacity: 100%;} /*Goes to 100% upon start*/
+}
+@keyframes startBtnAnimation {
+    0% {opacity: 0%; margin-top: 25px;}
+    75% {margin-top: 0px;}
+    100% {opacity: 100%;}
+}
+
+/*Outro Animations*/
+@keyframes outroAnimation {
+    0% {opacity: 100%;}
+    100% {opacity: 0%;}
+}
+@keyframes backGroundAnimation {
+    0% {background-color: rgba(234, 234, 234, 0)}
+    100% {background-color: rgba(255, 255, 255, 0)}
+}
+
+
+#introCanvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+}
+
+#game-canvas {
+    display: none;
+}
+
+
