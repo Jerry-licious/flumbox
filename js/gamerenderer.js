@@ -70,11 +70,11 @@ export class GameRenderer {
             this.context.lineTo(vertices[0].x, vertices[0].y);
 
             const render = body.render;
-            // Draw the shape.
-            this.context.stroke();
             this.context.fillStyle = render.fillStyle;
             this.context.strokeStyle = render.strokeStyle;
             this.context.lineWidth = render.lineWidth;
+            // Draw the shape.
+            this.context.stroke();
             this.context.fill();
         }
 
