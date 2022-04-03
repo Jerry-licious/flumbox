@@ -1,5 +1,6 @@
 import {RenderConfig} from "./renderconfig.js";
 import {Interpolation} from "./interpolation.js";
+import {levelSize} from "./gameworld.js";
 /**
  * @property {HTMLCanvasElement} canvas
  * @property {Matter.Engine} engine
@@ -33,13 +34,19 @@ export class GameRenderer {
         this.context.save();
         // Move to the centre of the canvas.
         this.context.translate(this.canvas.width / 2, this.canvas.height / 2);
+        // Rotate by the given rotation.
         this.context.rotate(this.canvasRotation);
-        // And move back to the origin.
-        this.context.translate(-this.canvas.width / 2, -this.canvas.height / 2);
+        // Since the level will be rotating, the level's display size cannot exceed the shortest of the width and height
+        // while it is rotating. When the square rotates, it takes the most horizontal/vertical space when it's
+        // rotated 45 degrees, where its width/height is equal to its side length * sqrt(2).
+        // We will additionally be leaving 10% space while rotating to make sure that the level is not too big.
+        const scaleFactor = Math.min(this.canvas.width, this.canvas.height) * Math.SQRT1_2 / levelSize * 0.9;
+        // Then scale the canvas by the given factor.
+        this.context.scale(scaleFactor, scaleFactor);
 
         // Fill the background.
         this.context.fillStyle = this.config.backgroundColour;
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.fillRect(-this.canvas.width / 2, -this.canvas.height / 2, this.canvas.width, this.canvas.height);
 
         this.context.beginPath();
 
@@ -92,13 +99,11 @@ export class GameRenderer {
 
             // Mark the start and end time.
             const startTime = Date.now();
-            // Total number of miliseconds that the animation takes.
-            const totalTime = 1000;
 
             // Set an interval to update the canvas rotation.
             const intervalHandle = setInterval(() => {
                 // Stop interpolating after the time is up.
-                if (Date.now() - startTime > totalTime) {
+                if (Date.now() - startTime > this.config.rotationAnimationDuration) {
                     this.canvasRotation = end;
                     clearInterval(intervalHandle);
 
@@ -108,7 +113,7 @@ export class GameRenderer {
                 }
                 this.canvasRotation = Interpolation.log2
                     // Calculate the progress by dividing
-                    .apply(start, end, (Date.now() - startTime) / totalTime);
+                    .apply(start, end, (Date.now() - startTime) / this.config.rotationAnimationDuration);
             }, 30);
         })
     }
@@ -117,7 +122,7 @@ export class GameRenderer {
      * Smoothly rotates the scene by the target angle.
      *
      * @param {number} theta Rotation in radians, clockwise.
-     * 
+     *
      * @returns {Promise} Returns an empty promise when the rotation animation is finished.
      * */
     rotateBy(theta) {
