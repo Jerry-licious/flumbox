@@ -128,7 +128,7 @@ export class GameWorld {
                 const labelB = pair.bodyB.label;
 
                 // If the two objects have the same label.
-                if (labelA === labelB) {
+                if (labelA === labelB && labelA !== "Rectangular Body") {
                     // Check if they are still in contact after 0.5 seconds, if so, win the game.
                     setTimeout(() => {
                         if (Matter.Collision.collides(pair.bodyA, pair.bodyB)) {
