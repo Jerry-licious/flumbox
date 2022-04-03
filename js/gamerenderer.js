@@ -52,10 +52,10 @@ export class GameRenderer {
         this.context.fillStyle = this.config.backgroundColour;
         this.context.fillRect(-this.canvas.width / 2, -this.canvas.height / 2, this.canvas.width, this.canvas.height);
 
-        this.context.beginPath();
-
         // Go through all bodies.
         for (const body of bodies) {
+            this.context.beginPath();
+
             const vertices = body.vertices;
 
             // First move to the first point of the shape.
@@ -68,16 +68,15 @@ export class GameRenderer {
 
             // And finally finish the line at the origin.
             this.context.lineTo(vertices[0].x, vertices[0].y);
+
+            const render = body.render;
+            // Draw the shape.
+            this.context.stroke();
+            this.context.fillStyle = render.fillStyle;
+            this.context.strokeStyle = render.strokeStyle;
+            this.context.lineWidth = render.lineWidth;
+            this.context.fill();
         }
-
-        // Set the style of the strokes.
-        this.context.lineWidth = this.config.shapeLineWidth;
-        this.context.strokeStyle = this.config.shapeStrokeColour;
-
-        // And outline the shapes.
-        this.context.stroke();
-        this.context.fillStyle = "black";
-        this.context.fill();
 
         // Reset the rotation.
         this.context.restore();
